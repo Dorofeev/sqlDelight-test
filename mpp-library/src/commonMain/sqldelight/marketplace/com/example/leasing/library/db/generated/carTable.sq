@@ -1,0 +1,66 @@
+CREATE TABLE IF NOT EXISTS CarTableItem (
+    id TEXT NOT NULL PRIMARY KEY,
+    brand TEXT NOT NULL,
+    brandModel TEXT NOT NULL,
+    modification TEXT NOT NULL,
+    bodyColor TEXT NOT NULL,
+    bodyType TEXT NOT NULL,
+    typeVehicle TEXT NOT NULL,
+    engineCapacity TEXT NOT NULL,
+    enginePower TEXT NOT NULL,
+    engineType TEXT NOT NULL,
+    transmission TEXT NOT NULL,
+    driveType TEXT NOT NULL,
+    price INTEGER NOT NULL,
+    deliveryDate TEXT NOT NULL,
+    dealerCity TEXT NOT NULL,
+    dealerName TEXT NOT NULL,
+    photo TEXT AS kotlin.collections.List<String> NOT NULL
+);
+
+deleteAll:
+DELETE
+FROM CarTableItem;
+
+deleteById:
+DELETE
+FROM CarTableItem
+WHERE id = ?;
+
+selectAll:
+SELECT *
+FROM CarTableItem;
+
+selectByVehicleType:
+SELECT *
+FROM CarTableItem
+WHERE typeVehicle = ?;
+
+selectById:
+SELECT *
+FROM CarTableItem
+WHERE id = ?;
+
+selectWithFilters:
+SELECT *
+FROM CarTableItem
+WHERE typeVehicle = :typeVehicle
+    AND CASE WHEN :brandModel IS  NOT NULL THEN brandModel IN :brandModel ELSE 1 END
+    AND CASE WHEN :minPrice IS NOT NULL AND :maxPrice IS NOT NULL THEN price BETWEEN :minPrice AND :maxPrice ELSE 1 END
+    AND CASE WHEN :minEngineCapacity IS NOT NULL AND :maxEngineCapacity IS NOT NULL THEN engineCapacity BETWEEN :minEngineCapacity AND :maxEngineCapacity ELSE 1 END
+    AND CASE WHEN :minEnginePower IS NOT NULL AND :maxEnginePower IS NOT NULL THEN enginePower BETWEEN :minEnginePower AND :maxEnginePower ELSE 1 END
+    AND CASE WHEN :brand IS NOT NULL THEN brand = :brand ELSE 1 END
+    AND CASE WHEN :city IS NOT NULL THEN dealerCity = :city ELSE 1 END;
+
+
+upsert {
+  UPDATE CarTableItem
+  SET brand = :brand, brandModel = :brandModel, modification = :modification, bodyColor = :bodyColor,
+      bodyType = :bodyType, typeVehicle = :typeVehicle, engineCapacity = :engineCapacity, enginePower = :enginePower,
+      engineType = :engineType, transmission = :transmission, driveType = :driveType, price = :price,
+      deliveryDate = :deliveryDate, dealerCity = :dealerCity, dealerName = :dealerName, photo = :photo
+  WHERE id = :id;
+
+  INSERT OR IGNORE INTO CarTableItem ( id, brand, brandModel, modification, bodyColor, bodyType, typeVehicle, engineCapacity, enginePower, engineType, transmission, driveType, price, deliveryDate, dealerCity, dealerName, photo)
+  VALUES(:id, :brand, :brandModel, :modification, :bodyColor, :bodyType, :typeVehicle, :engineCapacity, :enginePower, :engineType, :transmission, :driveType, :price, :deliveryDate, :dealerCity, :dealerName, :photo);
+}

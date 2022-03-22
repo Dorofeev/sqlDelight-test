@@ -6,6 +6,7 @@ plugins {
     id("multiplatform-library-convention")
     id("dev.icerock.mobile.multiplatform-resources")
     id("dev.icerock.mobile.multiplatform.ios-framework")
+    id("com.squareup.sqldelight").version("1.5.3")
 }
 
 dependencies {
@@ -14,6 +15,7 @@ dependencies {
 
     androidMainImplementation(libs.multidex)
     androidMainImplementation(libs.lifecycleViewModel)
+    androidMainImplementation(libs.sqldelightAndroidDriver)
 
     commonMainApi(libs.multiplatformSettings)
     commonMainApi(libs.napier)
@@ -28,6 +30,8 @@ dependencies {
     commonMainApi(projects.mppLibrary.domain)
     commonMainApi(projects.mppLibrary.feature.config)
     commonMainApi(projects.mppLibrary.feature.list)
+
+    iosMainImplementation(libs.sqldelightNativeDriver)
 
     commonTestImplementation(libs.mokoTestCore)
     commonTestImplementation(libs.mokoMvvmTest)
@@ -55,4 +59,11 @@ framework {
     export(libs.mokoMvvmState)
     export(libs.mokoUnits)
     export(libs.mokoFields)
+}
+
+sqldelight {
+    database("MarketplaceDataBase") {
+        packageName = "com.example.leasing.library.db.generated"
+        sourceFolders = listOf("sqldelight/marketplace")
+    }
 }

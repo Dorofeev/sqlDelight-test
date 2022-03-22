@@ -10,6 +10,9 @@ coroutinesVersion = "1.5.1-native-mt"
 # ktor
 ktorClientVersion = "1.6.1"
 
+# SQL Delight
+sqlDelightVersion = "1.5.3"
+
 # moko
 mokoGraphicsVersion = "0.8.0"
 mokoParcelizeVersion = "0.7.1"
@@ -89,6 +92,10 @@ multiplatformSettingsTest = { module = "com.russhwolf:multiplatform-settings-tes
 
 napier = { module = "io.github.aakira:napier", version.ref = "napierVersion" }
 
+# SQL Delight
+sqldelightAndroidDriver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqlDelightVersion" }
+sqldelightNativeDriver = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqlDelightVersion" }
+
 # android
 appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidAppCompatVersion" }
 material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
@@ -124,3 +131,4 @@ mokoNetworkGeneratorGradle = { module = "dev.icerock.moko:network-generator", ve
 mokoUnitsGeneratorGradle = { module = "dev.icerock.moko:units-generator", version.ref = "mokoUnitsVersion" }
 kotlinSerializationGradle = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlinVersion" }
 hiltGradle = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltVersion" }
+sqlDelightGradle = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelightVersion" }
